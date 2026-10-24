@@ -11,17 +11,20 @@ export interface Rsvp {
 }
 
 const url = import.meta.env.PUBLIC_SUPABASE_URL;
-const anonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+const publishableKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-/** Inserts an RSVP through Supabase's REST API (anon role may only insert, see supabase/schema.sql). */
+/**
+ * Inserts an RSVP through Supabase's REST API. The publishable key maps to the anon role,
+ * which may only insert (see supabase/schema.sql). It is not a JWT, so no Authorization header.
+ */
 export async function submitRsvp(rsvp: Rsvp): Promise<void> {
-  if (!url || !anonKey) throw new Error("Supabase is not configured (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY).");
+  if (!url || !publishableKey)
+    throw new Error("Supabase is not configured (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_PUBLISHABLE_KEY).");
 
   const response = await fetch(`${url}/rest/v1/rsvps`, {
     method: "POST",
     headers: {
-      apikey: anonKey,
-      Authorization: `Bearer ${anonKey}`,
+      apikey: publishableKey,
       "Content-Type": "application/json",
       Prefer: "return=minimal",
     },
