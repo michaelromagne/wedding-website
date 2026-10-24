@@ -1,0 +1,127 @@
+/* Palette from the "Nos couleurs" moodboard. */
+:root {
+  --burgundy: #480202;
+  --ruby: #6c0b25;
+  --olive: #64652a;
+  --sage: #b6ad80;
+  --cream: #f6f2e7;
+  --linen: #d9d3b9;
+  --espresso: #2c180f;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Parisienne", cursive;
+
+  --radius: 999px;
+  --max-width: 60rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--espresso);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--ruby);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+}
+
+.section {
+  padding: 5rem 1.5rem;
+}
+
+.section__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section__title {
+  text-align: center;
+  color: var(--burgundy);
+  font-size: clamp(2.6rem, 6vw, 3.6rem);
+  margin-bottom: 0.5rem;
+}
+
+.section__subtitle {
+  text-align: center;
+  font-style: italic;
+  margin: 0 0 3rem;
+  color: var(--olive);
+}
+
+/* Stripe band inspired by the stationery moodboard. */
+.stripes {
+  height: 1.25rem;
+  background: repeating-linear-gradient(90deg, var(--burgundy) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
+}
+
+.stripes--olive {
+  background: repeating-linear-gradient(90deg, var(--olive) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
+}
+
+.button {
+  display: inline-block;
+  border: 1px solid var(--burgundy);
+  border-radius: var(--radius);
+  background: var(--burgundy);
+  color: var(--cream);
+  font: inherit;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.7rem 2rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.button:hover,
+.button:focus-visible {
+  background: var(--ruby);
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--burgundy);
+}
+
+.button--ghost:hover,
+.button--ghost:focus-visible {
+  background: var(--burgundy);
+  color: var(--cream);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

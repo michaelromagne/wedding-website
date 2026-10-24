@@ -1,0 +1,82 @@
+---
+import { practicalInfo, townHall, venue } from "../data/wedding";
+---
+
+<section id="infos" class="section infos">
+  <div class="section__inner">
+    <h2 class="section__title script">Infos pratiques</h2>
+    <p class="section__subtitle">Tout ce qu'il faut savoir avant de prendre la route</p>
+
+    <div class="places">
+      {
+        [venue, townHall].map((place) => (
+          <a class="button button--ghost" href={place.mapsUrl} target="_blank" rel="noopener">
+            {place.name} ↗
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="cards">
+      {
+        practicalInfo.map((info) => (
+          <article class="card">
+            <h3 class="card__title">{info.title}</h3>
+            <p>{info.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .infos {
+    background: var(--olive);
+    color: var(--cream);
+  }
+
+  .infos :global(.section__title),
+  .infos :global(.section__subtitle) {
+    color: var(--cream);
+  }
+
+  .places {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .places .button {
+    border-color: var(--cream);
+    color: var(--cream);
+  }
+
+  .places .button:hover {
+    background: var(--cream);
+    color: var(--olive);
+  }
+
+  .cards {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+
+  .card {
+    border: 1px solid color-mix(in srgb, var(--cream) 45%, transparent);
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
+
+  .card__title {
+    font-size: 1.6rem;
+    color: var(--linen);
+  }
+
+  .card p {
+    margin: 0.6rem 0 0;
+  }
+</style>

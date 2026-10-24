@@ -1,0 +1,28 @@
+---
+import "@fontsource/cormorant-garamond/400.css";
+import "@fontsource/cormorant-garamond/400-italic.css";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/parisienne/400.css";
+import "../styles/global.css";
+import { couple, weddingDateLabel } from "../data/wedding";
+
+const title = `${couple.bride} & ${couple.groom} · ${weddingDateLabel}`;
+const description = `Le mariage de ${couple.bride} & ${couple.groom}, au Manoir de Kerleguer à Brest.`;
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <!-- Private site: keep it out of search engines. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href={`${base.replace(/\/$/, "")}/favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,120 @@
+---
+import { schedule } from "../data/wedding";
+---
+
+<section id="programme" class="section">
+  <div class="section__inner">
+    <h2 class="section__title script">Le programme</h2>
+    <p class="section__subtitle">Un week-end entier pour célébrer ensemble</p>
+
+    <div class="days">
+      {
+        schedule.map((day) => (
+          <article class="day">
+            <p class="day__date">{day.day}</p>
+            <h3 class="day__title">{day.title}</h3>
+            <ol class="timeline">
+              {day.items.map((item) => (
+                <li class="timeline__item">
+                  <span class="timeline__time">{item.time}</span>
+                  <div>
+                    <p class="timeline__title">{item.title}</p>
+                    {item.description && <p class="timeline__text">{item.description}</p>}
+                    {item.place && (
+                      <a class="timeline__place" href={item.place.mapsUrl} target="_blank" rel="noopener">
+                        {item.place.name} ↗
+                      </a>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .days {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    align-items: start;
+  }
+
+  .day {
+    background: #fffdf7;
+    border: 1px solid var(--linen);
+    border-top: 0.5rem solid var(--olive);
+    border-radius: 1.5rem;
+    padding: 2rem 1.75rem;
+  }
+
+  .day:first-child {
+    border-top-color: var(--burgundy);
+  }
+
+  .day__date {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.9rem;
+    color: var(--olive);
+  }
+
+  .day__title {
+    font-size: 2rem;
+    color: var(--burgundy);
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-top: 1px dashed var(--linen);
+  }
+
+  .timeline__item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  @media (max-width: 34rem) {
+    .timeline__item {
+      grid-template-columns: 4.5rem 1fr;
+    }
+  }
+
+  .timeline__time {
+    color: var(--ruby);
+    font-weight: 500;
+  }
+
+  .timeline__title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.3rem;
+  }
+
+  .timeline__text {
+    margin: 0.2rem 0 0;
+    font-size: 1.05rem;
+  }
+
+  .timeline__place {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 1rem;
+    font-style: italic;
+  }
+</style>

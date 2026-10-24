@@ -1,0 +1,288 @@
+---
+import { rsvpDeadlineLabel, schedule } from "../data/wedding";
+
+const MAX_COMPANIONS = 10;
+// Rejects whitespace-only names, which the database would refuse.
+const NOT_BLANK = ".*\\S.*";
+---
+
+<section id="rsvp" class="section rsvp">
+  <div class="section__inner">
+    <h2 class="section__title script">Serez-vous des nôtres&nbsp;?</h2>
+    <p class="section__subtitle">Merci de nous répondre avant le {rsvpDeadlineLabel}</p>
+
+    <form class="form" data-max-companions={MAX_COMPANIONS} novalidate>
+      <div class="field">
+        <label for="rsvp-name">Prénom et nom</label>
+        <input id="rsvp-name" name="name" autocomplete="name" required maxlength="200" pattern={NOT_BLANK} />
+      </div>
+
+      <div class="field">
+        <label for="rsvp-email">E-mail <span class="hint">(pour vous envoyer les dernières infos)</span></label>
+        <input id="rsvp-email" name="email" type="email" autocomplete="email" required maxlength="320" />
+      </div>
+
+      <fieldset class="field">
+        <legend>Serez-vous présent·e le {schedule[0].day.toLowerCase()}&nbsp;?</legend>
+        <div class="choices">
+          <label class="choice">
+            <input type="radio" name="attending" value="yes" required />
+            <span>Oui, avec joie&nbsp;!</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="attending" value="no" />
+            <span>Non, malheureusement</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field companions" hidden>
+        <legend>Qui vous accompagne&nbsp;?</legend>
+        <p class="hint">Ajoutez chaque adulte ou enfant qui vient avec vous (et qui a été invité).</p>
+        <ul class="companions__list"></ul>
+        <button type="button" class="button button--ghost companions__add">+ Ajouter une personne</button>
+      </fieldset>
+
+      <!-- Honeypot: hidden from humans, bots tend to fill it. -->
+      <input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <p class="form__status" role="status" aria-live="polite"></p>
+      <button type="submit" class="button form__submit">Envoyer ma réponse</button>
+    </form>
+
+    <template id="companion-template">
+      <li class="companion">
+        <input name="companion-name" placeholder="Prénom et nom" aria-label="Prénom et nom" required maxlength="200" pattern={NOT_BLANK} />
+        <select name="companion-type" aria-label="Adulte ou enfant">
+          <option value="adult">Adulte</option>
+          <option value="child">Enfant</option>
+        </select>
+        <button type="button" class="companion__remove" aria-label="Retirer cette personne">×</button>
+      </li>
+    </template>
+  </div>
+</section>
+
+<script>
+  import { submitRsvp, type Rsvp } from "../lib/rsvp";
+
+  const form = document.querySelector<HTMLFormElement>(".rsvp .form")!;
+  const companions = form.querySelector<HTMLFieldSetElement>(".companions")!;
+  const list = companions.querySelector<HTMLUListElement>(".companions__list")!;
+  const addButton = companions.querySelector<HTMLButtonElement>(".companions__add")!;
+  const status = form.querySelector<HTMLParagraphElement>(".form__status")!;
+  const submit = form.querySelector<HTMLButtonElement>(".form__submit")!;
+  const template = document.querySelector<HTMLTemplateElement>("#companion-template")!;
+  const maxCompanions = Number(form.dataset.maxCompanions);
+
+  const setStatus = (message: string, kind: "error" | "success" | "" = "") => {
+    status.textContent = message;
+    status.dataset.kind = kind;
+  };
+
+  const refreshAddButton = () => {
+    addButton.hidden = list.children.length >= maxCompanions;
+  };
+
+  addButton.addEventListener("click", () => {
+    const item = template.content.firstElementChild!.cloneNode(true) as HTMLLIElement;
+    item.querySelector(".companion__remove")!.addEventListener("click", () => {
+      item.remove();
+      refreshAddButton();
+    });
+    list.append(item);
+    item.querySelector("input")!.focus();
+    refreshAddButton();
+  });
+
+  form.addEventListener("change", (event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.name === "attending") companions.hidden = target.value !== "yes";
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    if (data.get("website")) return;
+
+    // Hidden companion inputs must not block a "no" answer.
+    companions.disabled = companions.hidden === true;
+    const valid = form.checkValidity();
+    companions.disabled = false;
+    if (!valid) {
+      form.reportValidity();
+      setStatus("Merci de compléter les champs manquants.", "error");
+      return;
+    }
+
+    const attending = data.get("attending") === "yes";
+    const rsvp: Rsvp = {
+      name: String(data.get("name")).trim(),
+      email: String(data.get("email")).trim(),
+      attending,
+      companions: attending
+        ? [...list.querySelectorAll<HTMLLIElement>(".companion")].map((item) => ({
+            name: item.querySelector("input")!.value.trim(),
+            is_child: item.querySelector("select")!.value === "child",
+          }))
+        : [],
+    };
+
+    submit.disabled = true;
+    setStatus("Envoi en cours…");
+    try {
+      await submitRsvp(rsvp);
+      form.reset();
+      list.replaceChildren();
+      companions.hidden = true;
+      refreshAddButton();
+      setStatus(
+        attending
+          ? "Merci ! Votre réponse est bien enregistrée, on a hâte de vous voir le 28 août."
+          : "Merci de nous avoir prévenus, vous nous manquerez !",
+        "success",
+      );
+    } catch (error) {
+      console.error(error);
+      setStatus("Oups, l'envoi a échoué. Réessayez dans un instant ou contactez-nous directement.", "error");
+    } finally {
+      submit.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .rsvp {
+    background: var(--linen);
+  }
+
+  .form {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    background: var(--cream);
+    border: 1px solid var(--burgundy);
+    border-radius: 1.5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .field[hidden],
+  .companions__add[hidden] {
+    display: none;
+  }
+
+  label,
+  legend {
+    font-weight: 500;
+    padding: 0;
+  }
+
+  .hint {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--olive);
+    margin: 0;
+  }
+
+  input,
+  select {
+    font: inherit;
+    font-size: 1.1rem;
+    color: var(--espresso);
+    background: #fffdf7;
+    border: 1px solid var(--sage);
+    border-radius: 0.6rem;
+    padding: 0.55rem 0.8rem;
+    width: 100%;
+  }
+
+  input:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--ruby);
+    outline-offset: 1px;
+  }
+
+  .choices {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .choice input {
+    width: auto;
+    accent-color: var(--burgundy);
+  }
+
+  .companions__list {
+    list-style: none;
+    margin: 0.4rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .companion {
+    display: grid;
+    grid-template-columns: 1fr 7rem 2.4rem;
+    gap: 0.5rem;
+  }
+
+  .companion__remove {
+    font: inherit;
+    font-size: 1.5rem;
+    line-height: 1;
+    border: none;
+    background: none;
+    color: var(--ruby);
+    cursor: pointer;
+  }
+
+  .companions__add {
+    justify-self: start;
+    font-size: 0.95rem;
+    padding: 0.5rem 1.25rem;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .form__status {
+    margin: 0;
+    min-height: 1.6em;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .form__status[data-kind="error"] {
+    color: var(--ruby);
+  }
+
+  .form__status[data-kind="success"] {
+    color: var(--olive);
+  }
+
+  .form__submit {
+    justify-self: center;
+  }
+</style>

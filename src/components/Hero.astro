@@ -1,0 +1,110 @@
+---
+import { couple, venue, weddingDate, weddingDateLabel } from "../data/wedding";
+---
+
+<header id="accueil" class="hero">
+  <div class="hero__card">
+    <p class="hero__kicker">Nous nous marions</p>
+    <h1 class="hero__names script">
+      {couple.bride}<span class="hero__amp">&amp;</span>{couple.groom}
+    </h1>
+    <svg class="hero__sprig" viewBox="0 0 120 24" aria-hidden="true">
+      <path d="M4 12 H116" />
+      {[20, 38, 56, 74, 92].map((x) => (
+        <>
+          <ellipse cx={x} cy="7" rx="6" ry="2.6" transform={`rotate(-25 ${x} 7)`} />
+          <ellipse cx={x + 8} cy="17" rx="6" ry="2.6" transform={`rotate(25 ${x + 8} 17)`} />
+        </>
+      ))}
+    </svg>
+    <p class="hero__date">{weddingDateLabel}</p>
+    <p class="hero__place">{venue.name} · {venue.city}</p>
+    <p class="hero__countdown" data-countdown={weddingDate.toISOString()}></p>
+    <a class="button" href="#rsvp">Je réponds</a>
+  </div>
+</header>
+
+<script>
+  const el = document.querySelector<HTMLElement>("[data-countdown]");
+  if (el) {
+    const days = Math.ceil((new Date(el.dataset.countdown!).getTime() - Date.now()) / 86_400_000);
+    el.textContent =
+      days > 1 ? `Plus que ${days} jours` : days === 1 ? "C'est demain !" : days === 0 ? "C'est aujourd'hui !" : "";
+  }
+</script>
+
+<style>
+  .hero {
+    display: grid;
+    place-items: center;
+    min-height: min(calc(100svh - 3.5rem), 56rem);
+    padding: 2rem 1.25rem;
+    /* Checkerboard frame, echoing the envelope liner on the moodboard. */
+    background: repeating-conic-gradient(var(--burgundy) 0 25%, var(--cream) 0 50%) 0 0 / 2.5rem 2.5rem;
+  }
+
+  .hero__card {
+    width: min(100%, 38rem);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    background: var(--cream);
+    border: 1px solid var(--burgundy);
+    outline: 0.6rem solid var(--cream);
+    border-radius: 50% / 18%;
+  }
+
+  .hero__kicker,
+  .hero__place {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.95rem;
+    color: var(--olive);
+  }
+
+  @media (max-width: 34rem) {
+    .hero__card {
+      padding: 3rem 1.25rem;
+    }
+
+    .hero__kicker,
+    .hero__place {
+      letter-spacing: 0.12em;
+      font-size: 0.8rem;
+    }
+  }
+
+  .hero__names {
+    margin: 1rem 0 0.5rem;
+    color: var(--burgundy);
+    font-size: clamp(3.4rem, 12vw, 5.5rem);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  .hero__amp {
+    font-size: 0.6em;
+    color: var(--olive);
+  }
+
+  .hero__sprig {
+    width: 8rem;
+    fill: var(--olive);
+    stroke: var(--olive);
+    stroke-width: 1;
+  }
+
+  .hero__date {
+    margin: 1rem 0 0.25rem;
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    color: var(--espresso);
+  }
+
+  .hero__countdown {
+    margin: 1.25rem 0 2rem;
+    font-style: italic;
+    color: var(--ruby);
+    min-height: 1.6em;
+  }
+</style>

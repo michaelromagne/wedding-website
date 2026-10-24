@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import Programme from "../components/Programme.astro";
+import Infos from "../components/Infos.astro";
+import Rsvp from "../components/Rsvp.astro";
+import { couple, weddingDateLabel } from "../data/wedding";
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <Hero />
+    <div class="stripes"></div>
+    <Programme />
+    <Infos />
+    <div class="stripes stripes--olive"></div>
+    <Rsvp />
+  </main>
+  <footer class="footer">
+    <p class="script footer__names">{couple.bride} &amp; {couple.groom}</p>
+    <p>{weddingDateLabel} · Brest</p>
+  </footer>
+</Layout>
+
+<style>
+  .footer {
+    background: var(--burgundy);
+    color: var(--linen);
+    text-align: center;
+    padding: 2.5rem 1rem;
+  }
+
+  .footer p {
+    margin: 0;
+  }
+
+  .footer__names {
+    font-size: 2.4rem;
+  }
+</style>
