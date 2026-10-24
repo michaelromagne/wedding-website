@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import Photos from "../components/Photos.astro";
+import Welcome from "../components/Welcome.astro";
 import Programme from "../components/Programme.astro";
 import Infos from "../components/Infos.astro";
 import Rsvp from "../components/Rsvp.astro";
@@ -14,10 +15,10 @@ import { couple, weddingDateLabel } from "../data/wedding";
   <main>
     <Hero />
     <Photos />
-    <div class="stripes"></div>
+    <Welcome />
     <Programme />
     <Infos />
-    <div class="stripes stripes--olive"></div>
+    <div class="stripes stripes--green"></div>
     <Rsvp />
     <div class="stripes stripes--linen"></div>
   </main>

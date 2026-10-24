@@ -1,4 +1,5 @@
 ---
+import TimelineIcon from "./TimelineIcon.astro";
 import { schedule } from "../data/wedding";
 ---
 
@@ -7,50 +8,46 @@ import { schedule } from "../data/wedding";
     <h2 class="section__title"><span class="script">Le</span>Programme</h2>
     <p class="section__subtitle">Deux jours pour célébrer ensemble</p>
 
-    <div class="days">
-      {
-        schedule.map((day) => (
-          <article class="day">
+    {
+      schedule.map((day) => (
+        <article class="day">
+          <header class="day__header">
             <p class="day__date">{day.day}</p>
             <h3 class="day__title">{day.title}</h3>
-            <ol class="timeline">
-              {day.items.map((item) => (
-                <li class="timeline__item">
-                  <span class="timeline__time">{item.time}</span>
-                  <div>
-                    <p class="timeline__title">{item.title}</p>
-                    {item.description && <p class="timeline__text">{item.description}</p>}
-                    {item.place && (
-                      <a class="timeline__place" href={item.place.mapsUrl} target="_blank" rel="noopener">
-                        {item.place.name} ↗
-                      </a>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </article>
-        ))
-      }
-    </div>
+          </header>
+          <ol class="timeline">
+            {day.items.map((item) => (
+              <li class="timeline__item">
+                <div class="timeline__text">
+                  <p class="timeline__time">{item.time}</p>
+                  <p class="timeline__title">{item.title}</p>
+                  {item.description && <p class="timeline__description">{item.description}</p>}
+                  {item.place && (
+                    <a class="timeline__place" href={item.place.mapsUrl} target="_blank" rel="noopener">
+                      {item.place.name} ↗
+                    </a>
+                  )}
+                </div>
+                <div class="timeline__icon">
+                  <TimelineIcon name={item.icon} />
+                </div>
+              </li>
+            ))}
+          </ol>
+        </article>
+      ))
+    }
   </div>
 </section>
 
 <style>
-  .days {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    align-items: start;
+  .day + .day {
+    margin-top: 4rem;
   }
 
-  .day {
-    background: #fffdf8;
-    border: 1px solid var(--wine);
-    outline: 1px solid var(--wine);
-    outline-offset: -0.5rem;
-    border-radius: 0.5rem;
-    padding: 2.5rem 2.25rem;
+  .day__header {
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
   .day__date {
@@ -59,65 +56,135 @@ import { schedule } from "../data/wedding";
     letter-spacing: 0.22em;
     font-size: 0.8rem;
     font-weight: 400;
-    color: var(--olive);
+    color: var(--green);
   }
 
   .day__title {
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
     text-transform: uppercase;
     color: var(--wine);
-    margin-bottom: 1.5rem;
   }
 
+  /* One vertical line down the middle; text and icon alternate sides around it. */
   .timeline {
+    position: relative;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 auto;
+    padding: 1rem 0;
+    max-width: 46rem;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    border-left: 1px solid var(--wine);
   }
 
   .timeline__item {
+    position: relative;
     display: grid;
-    grid-template-columns: 6.5rem 1fr;
-    gap: 1rem;
-    padding: 0.9rem 0;
-    border-top: 1px solid color-mix(in srgb, var(--linen) 70%, transparent);
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+    align-items: center;
+    padding: 1.25rem 0;
   }
 
-  .timeline__item:first-child {
-    border-top: none;
-    padding-top: 0;
+  .timeline__item::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 0.9rem);
+    width: 1.8rem;
+    border-top: 1px solid var(--wine);
   }
 
-  @media (max-width: 34rem) {
-    .timeline__item {
-      grid-template-columns: 4.5rem 1fr;
-    }
+  .timeline__text,
+  .timeline__icon {
+    grid-row: 1;
+  }
+
+  .timeline__text {
+    grid-column: 1;
+    text-align: right;
+  }
+
+  .timeline__icon {
+    grid-column: 2;
+    justify-self: start;
+    width: 4.5rem;
+    color: var(--wine);
+  }
+
+  .timeline__item:nth-child(even) .timeline__text {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .timeline__item:nth-child(even) .timeline__icon {
+    grid-column: 1;
+    justify-self: end;
   }
 
   .timeline__time {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
     color: var(--ruby);
-    font-weight: 400;
-    font-size: 0.95rem;
-    letter-spacing: 0.06em;
   }
 
   .timeline__title {
     margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.35rem;
+    font-family: var(--font-script);
+    font-size: 2rem;
+    line-height: 1.2;
     color: var(--wine);
   }
 
-  .timeline__text {
+  .timeline__description {
     margin: 0.2rem 0 0;
-    font-size: 0.98rem;
+    font-size: 0.95rem;
   }
 
   .timeline__place {
     display: inline-block;
     margin-top: 0.3rem;
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--ruby);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--green);
+  }
+
+  /* Mobile: line on the left, icons sit on it, text to the right. */
+  @media (max-width: 40rem) {
+    .timeline::before {
+      left: 1.75rem;
+    }
+
+    .timeline__item,
+    .timeline__item:nth-child(even) {
+      grid-template-columns: 3.5rem 1fr;
+      column-gap: 1.25rem;
+    }
+
+    .timeline__item::after {
+      display: none;
+    }
+
+    .timeline__item .timeline__icon,
+    .timeline__item:nth-child(even) .timeline__icon {
+      grid-column: 1;
+      justify-self: center;
+      width: 3rem;
+      padding: 0.3rem 0;
+      background: var(--cream);
+    }
+
+    .timeline__item .timeline__text,
+    .timeline__item:nth-child(even) .timeline__text {
+      grid-column: 2;
+      text-align: left;
+    }
   }
 </style>

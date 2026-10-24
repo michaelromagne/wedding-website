@@ -2,65 +2,61 @@
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
-// Drop photos in src/assets/photos/ (sorted by file name, the middle one is shown largest).
+// Photo-booth strip: drop up to 4 photos in src/assets/photos/ (sorted by file name).
+// Until then, empty blocks keep the layout.
+const SLOTS = 4;
 const files = import.meta.glob<{ default: ImageMetadata }>("../assets/photos/*.{jpg,jpeg,png,webp,avif}", {
   eager: true,
 });
 const photos = Object.keys(files)
   .sort()
-  .slice(0, 3)
+  .slice(0, SLOTS)
   .map((path) => files[path].default);
-const slots = photos.length ? photos : [null, null, null];
+const slots = Array.from({ length: SLOTS }, (_, index) => photos[index]);
 ---
 
 <section class="photos" aria-label="Photos">
-  <div class="photos__row">
+  <div class="photos__booth">
     {
-      slots.map((photo, index) => (
-        <figure class:list={["photos__frame", { "photos__frame--main": index === Math.floor(slots.length / 2) }]}>
+      slots.map((photo) => (
+        <figure class="photos__frame">
           {photo ? (
-            <Image src={photo} alt="Candice et Michaël" widths={[400, 800, 1200]} sizes="(max-width: 46rem) 90vw, 33vw" />
+            <Image src={photo} alt="Candice et Michaël" widths={[300, 600]} sizes="(max-width: 40rem) 42vw, 15rem" />
           ) : (
-            <span class="photos__placeholder script">C &amp; M</span>
+            <span class="photos__placeholder" aria-hidden="true"></span>
           )}
         </figure>
       ))
     }
   </div>
-  <p class="photos__caption script">Bientôt mariés…</p>
+  <p class="photos__caption script">on se marie&nbsp;!</p>
 </section>
 
 <style>
   .photos {
-    padding: 5rem 1.5rem 4rem;
-    background: var(--linen);
+    padding: 5rem 1.5rem 4.5rem;
+    background: var(--wine);
     text-align: center;
   }
 
-  .photos__row {
-    display: flex;
+  .photos__booth {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 15rem));
     justify-content: center;
-    align-items: center;
-    gap: clamp(1rem, 3vw, 2.5rem);
-    max-width: var(--max-width);
+    gap: 0.5rem;
+    width: fit-content;
     margin: 0 auto;
+    padding: 0.5rem;
+    background: var(--cream);
+    transform: rotate(-2deg);
+    box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.3);
   }
 
-  /* Arched frames with a double wine border. */
   .photos__frame {
     margin: 0;
-    flex: 0 1 16rem;
-    aspect-ratio: 3 / 4;
-    border-radius: 999px 999px 0.75rem 0.75rem;
+    aspect-ratio: 1;
     overflow: hidden;
-    border: 1px solid var(--wine);
-    outline: 1px solid var(--wine);
-    outline-offset: 0.45rem;
-    background: var(--cream);
-  }
-
-  .photos__frame--main {
-    flex-basis: 21rem;
+    background: var(--linen);
   }
 
   .photos__frame img {
@@ -70,27 +66,23 @@ const slots = photos.length ? photos : [null, null, null];
   }
 
   .photos__placeholder {
-    display: grid;
-    place-items: center;
+    display: block;
     height: 100%;
-    font-size: 2.6rem;
-    color: var(--wine);
-    opacity: 0.6;
+    background: var(--linen);
+    outline: 1px solid color-mix(in srgb, var(--wine) 20%, transparent);
+    outline-offset: -0.75rem;
   }
 
   .photos__caption {
-    margin: 2.5rem 0 0;
-    font-size: 2.4rem;
-    color: var(--wine);
+    margin: 1.25rem 0 0;
+    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    color: var(--linen);
+    transform: rotate(-4deg);
   }
 
-  @media (max-width: 46rem) {
-    .photos__frame:not(.photos__frame--main) {
-      display: none;
-    }
-
-    .photos__frame--main {
-      flex-basis: min(80vw, 22rem);
+  @media (max-width: 40rem) {
+    .photos__booth {
+      grid-template-columns: repeat(2, minmax(0, 42vw));
     }
   }
 </style>

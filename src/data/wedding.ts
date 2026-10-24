@@ -21,8 +21,11 @@ export const townHall = {
   mapsUrl: mapsUrl("Mairie de Guipavas"),
 };
 
+export type ScheduleIcon = "townHall" | "rings" | "cocktail" | "dinner" | "cake" | "disco" | "brunch";
+
 export interface ScheduleItem {
   time: string;
+  icon: ScheduleIcon;
   title: string;
   description?: string;
   place?: { name: string; mapsUrl: string };
@@ -41,25 +44,29 @@ export const schedule: ScheduleDay[] = [
     items: [
       {
         time: "14h00",
+        icon: "townHall",
         title: "Cérémonie civile",
         description: "On se dit oui une première fois, devant monsieur le maire.",
         place: townHall,
       },
       {
         time: "15h30",
+        icon: "rings",
         title: "Cérémonie laïque",
         description: "Entourés de nos proches, dans les jardins du manoir.",
         place: venue,
       },
       {
         time: "17h00",
+        icon: "cocktail",
         title: "Cocktail",
         description: "Bulles, jeux et retrouvailles au soleil (on l'espère !).",
       },
-      { time: "20h00", title: "Dîner" },
-      { time: "23h00", title: "Dessert" },
+      { time: "20h00", icon: "dinner", title: "Dîner" },
+      { time: "23h00", icon: "cake", title: "Dessert" },
       {
         time: "Ensuite",
+        icon: "disco",
         title: "Ouverture du bal & soirée",
         description: "Place à la piste de danse jusqu'au bout de la nuit.",
       },
@@ -71,6 +78,7 @@ export const schedule: ScheduleDay[] = [
     items: [
       {
         time: "Fin de matinée",
+        icon: "brunch",
         title: "Brunch",
         description:
           "Sortez votre plus beau maillot de sport (vintage, club local, équipe nationale…) : olympiades par équipe, volley, spikeball, palet et pétanque au programme.",

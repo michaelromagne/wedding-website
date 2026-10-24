@@ -3,7 +3,7 @@
   --wine: #3b1219;
   --burgundy: #480202;
   --ruby: #6c0b25;
-  --olive: #64652a;
+  --green: #2f4f3e; /* fir green, muted (not khaki) */
   --sage: #b6ad80;
   --linen: #d9cdbb;
   --cream: #f4efe4;
@@ -72,8 +72,8 @@ h3 {
   color: var(--linen);
 }
 
-.section--olive {
-  background: var(--olive);
+.section--green {
+  background: var(--green);
   color: var(--cream);
 }
 
@@ -99,9 +99,9 @@ h3 {
 }
 
 .section--wine .section__title,
-.section--olive .section__title,
+.section--green .section__title,
 .section--wine .section__title .script,
-.section--olive .section__title .script {
+.section--green .section__title .script {
   color: inherit;
 }
 
@@ -120,8 +120,8 @@ h3 {
   background: repeating-linear-gradient(90deg, var(--wine) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
 }
 
-.stripes--olive {
-  background: repeating-linear-gradient(90deg, var(--olive) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
+.stripes--green {
+  background: repeating-linear-gradient(90deg, var(--green) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
 }
 
 .stripes--linen {

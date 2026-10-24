@@ -1,7 +1,7 @@
 ---
 // Hand-drawn style line art in the spirit of the invitation moodboard.
 interface Props {
-  name: "chandelier" | "table";
+  name: "chandelier" | "table" | "bow";
   class?: string;
 }
 
@@ -87,6 +87,18 @@ const flame = (x: number, y: number) => `M${x} ${y} c-3 -5 -2 -9 0 -13 c2 4 3 8 
       ].map(([x, y]) => (
         <path d={`M${x} ${y - 4} v8 M${x - 4} ${y} h8 M${x - 3} ${y - 3} l6 6 M${x + 3} ${y - 3} l-6 6`} />
       ))}
+    </svg>
+  )
+}
+
+{
+  name === "bow" && (
+    <svg class:list={["illustration", className]} viewBox="0 0 100 70" aria-hidden="true">
+      <path d="M50 22 C38 6 14 2 10 14 C6 26 30 32 46 28" />
+      <path d="M50 22 C62 6 86 2 90 14 C94 26 70 32 54 28" />
+      <path d="M44 20 q6 -4 12 0 q2 6 -2 10 q-4 2 -8 0 q-4 -4 -2 -10z" />
+      <path d="M46 30 C42 44 34 56 26 66 l8 -2 2 6 C44 58 48 44 49 31" />
+      <path d="M54 30 C58 44 66 56 74 66 l-8 -2 -2 6 C56 58 52 44 51 31" />
     </svg>
   )
 }
