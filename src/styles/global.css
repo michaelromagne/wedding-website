@@ -94,7 +94,7 @@ h3 {
 .section__title .script {
   display: block;
   font-size: 0.55em;
-  margin-bottom: -0.15em;
+  margin-bottom: 0.05em;
   color: var(--wood);
 }
 

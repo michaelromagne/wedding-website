@@ -39,10 +39,23 @@ import { practicalInfo, townHall, venue } from "../data/wedding";
     margin-bottom: 3rem;
   }
 
+  /* 4 across, else 2x2, else stacked on phones: never a 3 + 1 layout. */
   .cards {
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 60rem) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
   }
 
   .card {
