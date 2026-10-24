@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
+import Photos from "../components/Photos.astro";
 import Programme from "../components/Programme.astro";
 import Infos from "../components/Infos.astro";
 import Rsvp from "../components/Rsvp.astro";
@@ -12,11 +13,13 @@ import { couple, weddingDateLabel } from "../data/wedding";
   <Nav />
   <main>
     <Hero />
+    <Photos />
     <div class="stripes"></div>
     <Programme />
     <Infos />
     <div class="stripes stripes--olive"></div>
     <Rsvp />
+    <div class="stripes stripes--linen"></div>
   </main>
   <footer class="footer">
     <p class="script footer__names">{couple.bride} &amp; {couple.groom}</p>
@@ -26,10 +29,13 @@ import { couple, weddingDateLabel } from "../data/wedding";
 
 <style>
   .footer {
-    background: var(--burgundy);
+    background: var(--wine);
     color: var(--linen);
     text-align: center;
-    padding: 2.5rem 1rem;
+    padding: 3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
   .footer p {
@@ -37,6 +43,6 @@ import { couple, weddingDateLabel } from "../data/wedding";
   }
 
   .footer__names {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
   }
 </style>

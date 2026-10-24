@@ -1,27 +1,30 @@
 ---
+import Illustration from "./Illustration.astro";
 import { couple, venue, weddingDate, weddingDateLabel } from "../data/wedding";
+
+const [weekday, ...date] = weddingDateLabel.split(" ");
 ---
 
 <header id="accueil" class="hero">
-  <div class="hero__card">
-    <p class="hero__kicker">Nous nous marions</p>
-    <h1 class="hero__names script">
-      {couple.bride}<span class="hero__amp">&amp;</span>{couple.groom}
+  <div class="hero__chandelier"><Illustration name="chandelier" /></div>
+
+  <p class="hero__corner hero__corner--tl">Chère famille,<br /><em>chers amis</em></p>
+  <p class="hero__corner hero__corner--tr">Nous avons hâte de<br />célébrer avec vous.</p>
+
+  <div class="hero__center">
+    <p class="hero__kicker script">Le mariage de</p>
+    <h1 class="hero__names">
+      <span>{couple.bride}</span>
+      <span>&amp; {couple.groom}</span>
     </h1>
-    <svg class="hero__sprig" viewBox="0 0 120 24" aria-hidden="true">
-      <path d="M4 12 H116" />
-      {[20, 38, 56, 74, 92].map((x) => (
-        <>
-          <ellipse cx={x} cy="7" rx="6" ry="2.6" transform={`rotate(-25 ${x} 7)`} />
-          <ellipse cx={x + 8} cy="17" rx="6" ry="2.6" transform={`rotate(25 ${x + 8} 17)`} />
-        </>
-      ))}
-    </svg>
-    <p class="hero__date">{weddingDateLabel}</p>
-    <p class="hero__place">{venue.name} · {venue.city}</p>
     <p class="hero__countdown" data-countdown={weddingDate.toISOString()}></p>
-    <a class="button" href="#rsvp">Je réponds</a>
+    <a class="button button--light" href="#rsvp">Je réponds</a>
   </div>
+
+  <p class="hero__corner hero__corner--bl">{weekday},<br />{date.join(" ")}<br />14h00</p>
+  <p class="hero__corner hero__corner--br">Au<br />{venue.name}<br />{venue.city}</p>
+
+  <div class="hero__table"><Illustration name="table" /></div>
 </header>
 
 <script>
@@ -35,76 +38,139 @@ import { couple, venue, weddingDate, weddingDateLabel } from "../data/wedding";
 
 <style>
   .hero {
+    position: relative;
     display: grid;
-    place-items: center;
-    min-height: min(calc(100svh - 3.5rem), 56rem);
-    padding: 2rem 1.25rem;
-    /* Checkerboard frame, echoing the envelope liner on the moodboard. */
-    background: repeating-conic-gradient(var(--burgundy) 0 25%, var(--cream) 0 50%) 0 0 / 2.5rem 2.5rem;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "tl chandelier tr"
+      ". center ."
+      "bl table br";
+    align-items: start;
+    gap: 0 2rem;
+    min-height: min(calc(100svh - 3.5rem), 58rem);
+    padding: 0 3.5rem;
+    background: var(--wine);
+    color: var(--linen);
+    /* Thin linen frame, like the edge of the printed card. */
+    box-shadow: inset 0 0 0 0.6rem var(--linen);
+    overflow: hidden;
   }
 
-  .hero__card {
-    width: min(100%, 38rem);
-    padding: 3.5rem 2rem;
-    text-align: center;
-    background: var(--cream);
-    border: 1px solid var(--burgundy);
-    outline: 0.6rem solid var(--cream);
-    border-radius: 50% / 18%;
+  .hero__chandelier {
+    grid-area: chandelier;
+    width: clamp(8rem, 18vw, 13rem);
+    justify-self: center;
   }
 
-  .hero__kicker,
-  .hero__place {
+  .hero__table {
+    grid-area: table;
+    width: clamp(15rem, 34vw, 26rem);
+    justify-self: center;
+    align-self: end;
+    margin-bottom: 0.6rem;
+  }
+
+  .hero__corner {
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.95rem;
-    color: var(--olive);
+    font-size: clamp(1rem, 1.8vw, 1.45rem);
+    line-height: 1.35;
   }
 
-  @media (max-width: 34rem) {
-    .hero__card {
-      padding: 3rem 1.25rem;
-    }
+  .hero__corner--tl {
+    grid-area: tl;
+    padding-top: 3.5rem;
+  }
 
-    .hero__kicker,
-    .hero__place {
-      letter-spacing: 0.12em;
-      font-size: 0.8rem;
-    }
+  .hero__corner--tr {
+    grid-area: tr;
+    padding-top: 3.5rem;
+    text-align: right;
+  }
+
+  .hero__corner--bl {
+    grid-area: bl;
+    align-self: end;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero__corner--br {
+    grid-area: br;
+    align-self: end;
+    padding-bottom: 3.5rem;
+    text-align: right;
+  }
+
+  .hero__center {
+    grid-area: center;
+    align-self: center;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+
+  .hero__kicker {
+    margin: 0 0 -0.2em;
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    line-height: 1;
   }
 
   .hero__names {
-    margin: 1rem 0 0.5rem;
-    color: var(--burgundy);
-    font-size: clamp(3.4rem, 12vw, 5.5rem);
     display: flex;
     flex-direction: column;
-    line-height: 1.05;
-  }
-
-  .hero__amp {
-    font-size: 0.6em;
-    color: var(--olive);
-  }
-
-  .hero__sprig {
-    width: 8rem;
-    fill: var(--olive);
-    stroke: var(--olive);
-    stroke-width: 1;
-  }
-
-  .hero__date {
-    margin: 1rem 0 0.25rem;
-    font-size: clamp(1.6rem, 5vw, 2rem);
-    color: var(--espresso);
+    text-transform: uppercase;
+    font-size: clamp(3.6rem, 10vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
   }
 
   .hero__countdown {
-    margin: 1.25rem 0 2rem;
-    font-style: italic;
-    color: var(--ruby);
-    min-height: 1.6em;
+    margin: 1.75rem 0 1.5rem;
+    min-height: 1.7em;
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 46rem) {
+    .hero {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "chandelier chandelier"
+        "tl tr"
+        "center center"
+        "bl br"
+        "table table";
+      grid-template-rows: auto auto 1fr auto auto;
+      min-height: auto;
+      padding: 0 1.75rem;
+    }
+
+    .hero__chandelier {
+      width: 7rem;
+    }
+
+    .hero__table {
+      width: min(100%, 18rem);
+    }
+
+    .hero__center {
+      padding: 3.5rem 0;
+    }
+
+    .hero__corner--tl,
+    .hero__corner--tr {
+      padding-top: 0.5rem;
+    }
+
+    .hero__corner--bl,
+    .hero__corner--br {
+      padding-bottom: 0.5rem;
+      align-self: start;
+    }
+
+    .hero__names {
+      font-size: clamp(2.9rem, 14vw, 4rem);
+    }
   }
 </style>

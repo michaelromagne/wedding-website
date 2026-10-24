@@ -6,9 +6,9 @@ const MAX_COMPANIONS = 10;
 const NOT_BLANK = ".*\\S.*";
 ---
 
-<section id="rsvp" class="section rsvp">
+<section id="rsvp" class="section section--wine rsvp">
   <div class="section__inner">
-    <h2 class="section__title script">Serez-vous des nôtres&nbsp;?</h2>
+    <h2 class="section__title"><span class="script">Serez-vous</span>des nôtres&nbsp;?</h2>
     <p class="section__subtitle">Merci de nous répondre avant le {rsvpDeadlineLabel}</p>
 
     <form class="form" data-max-companions={MAX_COMPANIONS} novalidate>
@@ -40,7 +40,7 @@ const NOT_BLANK = ".*\\S.*";
         <legend>Qui vous accompagne&nbsp;?</legend>
         <p class="hint">Ajoutez chaque adulte ou enfant qui vient avec vous (et qui a été invité).</p>
         <ul class="companions__list"></ul>
-        <button type="button" class="button button--ghost companions__add">+ Ajouter une personne</button>
+        <button type="button" class="button companions__add">+ Ajouter une personne</button>
       </fieldset>
 
       <!-- Honeypot: hidden from humans, bots tend to fill it. -->
@@ -152,17 +152,15 @@ const NOT_BLANK = ".*\\S.*";
 </script>
 
 <style>
-  .rsvp {
-    background: var(--linen);
-  }
-
   .form {
     max-width: 34rem;
     margin: 0 auto;
     padding: 2.5rem 2rem;
     background: var(--cream);
-    border: 1px solid var(--burgundy);
-    border-radius: 1.5rem;
+    color: var(--espresso);
+    border-radius: 0.5rem;
+    outline: 1px solid var(--linen);
+    outline-offset: 0.5rem;
     display: grid;
     gap: 1.5rem;
   }
@@ -183,14 +181,15 @@ const NOT_BLANK = ".*\\S.*";
 
   label,
   legend {
-    font-weight: 500;
+    font-weight: 400;
     padding: 0;
+    color: var(--wine);
   }
 
   .hint {
-    font-weight: 400;
+    font-weight: 300;
     font-style: italic;
-    font-size: 1rem;
+    font-size: 0.92rem;
     color: var(--olive);
     margin: 0;
   }
@@ -198,9 +197,9 @@ const NOT_BLANK = ".*\\S.*";
   input,
   select {
     font: inherit;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--espresso);
-    background: #fffdf7;
+    background: #fffdf8;
     border: 1px solid var(--sage);
     border-radius: 0.6rem;
     padding: 0.55rem 0.8rem;
@@ -223,13 +222,14 @@ const NOT_BLANK = ".*\\S.*";
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    font-weight: 400;
+    font-weight: 300;
+    color: var(--espresso);
     cursor: pointer;
   }
 
   .choice input {
     width: auto;
-    accent-color: var(--burgundy);
+    accent-color: var(--wine);
   }
 
   .companions__list {
@@ -258,8 +258,10 @@ const NOT_BLANK = ".*\\S.*";
 
   .companions__add {
     justify-self: start;
-    font-size: 0.95rem;
-    padding: 0.5rem 1.25rem;
+    font-size: 0.75rem;
+    padding: 0.6rem 1.4rem;
+    background: transparent;
+    color: var(--wine);
   }
 
   .honeypot {

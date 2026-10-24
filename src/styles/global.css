@@ -1,18 +1,20 @@
-/* Palette from the "Nos couleurs" moodboard. */
+/* Palette from the "Nos couleurs" moodboard, wine/linen pairing from the invitation inspiration. */
 :root {
+  --wine: #3b1219;
   --burgundy: #480202;
   --ruby: #6c0b25;
   --olive: #64652a;
   --sage: #b6ad80;
-  --cream: #f6f2e7;
-  --linen: #d9d3b9;
+  --linen: #d9cdbb;
+  --cream: #f4efe4;
   --espresso: #2c180f;
 
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-script: "Parisienne", cursive;
+  --font-display: "Antic Didone", "Didot", Georgia, serif;
+  --font-script: "Pinyon Script", cursive;
+  --font-sans: "Jost", system-ui, sans-serif;
 
   --radius: 999px;
-  --max-width: 60rem;
+  --max-width: 62rem;
 }
 
 *,
@@ -23,41 +25,56 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 4.5rem;
+  scroll-padding-top: 4rem;
 }
 
 body {
   margin: 0;
   background: var(--cream);
   color: var(--espresso);
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 img {
   max-width: 100%;
+  display: block;
 }
 
 a {
-  color: var(--ruby);
+  color: inherit;
 }
 
 h1,
 h2,
 h3 {
-  font-weight: 500;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
   margin: 0;
 }
 
 .script {
   font-family: var(--font-script);
   font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .section {
-  padding: 5rem 1.5rem;
+  padding: 6rem 1.5rem;
+}
+
+.section--wine {
+  background: var(--wine);
+  color: var(--linen);
+}
+
+.section--olive {
+  background: var(--olive);
+  color: var(--cream);
 }
 
 .section__inner {
@@ -65,42 +82,65 @@ h3 {
   margin: 0 auto;
 }
 
+/* Script kicker over tall didone capitals, as on the invitation. */
 .section__title {
   text-align: center;
-  color: var(--burgundy);
-  font-size: clamp(2.6rem, 6vw, 3.6rem);
-  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: clamp(2.6rem, 7vw, 4.4rem);
+  letter-spacing: 0.02em;
+  color: var(--wine);
+}
+
+.section__title .script {
+  display: block;
+  font-size: 0.55em;
+  margin-bottom: -0.15em;
+  color: var(--ruby);
+}
+
+.section--wine .section__title,
+.section--olive .section__title,
+.section--wine .section__title .script,
+.section--olive .section__title .script {
+  color: inherit;
 }
 
 .section__subtitle {
   text-align: center;
-  font-style: italic;
-  margin: 0 0 3rem;
-  color: var(--olive);
+  margin: 1rem 0 3.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
 }
 
 /* Stripe band inspired by the stationery moodboard. */
 .stripes {
   height: 1.25rem;
-  background: repeating-linear-gradient(90deg, var(--burgundy) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
+  background: repeating-linear-gradient(90deg, var(--wine) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
 }
 
 .stripes--olive {
   background: repeating-linear-gradient(90deg, var(--olive) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
 }
 
+.stripes--linen {
+  background: repeating-linear-gradient(90deg, var(--linen) 0 0.6rem, var(--wine) 0.6rem 1.2rem);
+}
+
 .button {
   display: inline-block;
-  border: 1px solid var(--burgundy);
+  border: 1px solid var(--wine);
   border-radius: var(--radius);
-  background: var(--burgundy);
+  background: var(--wine);
   color: var(--cream);
   font: inherit;
-  font-size: 1.1rem;
-  letter-spacing: 0.08em;
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 0.7rem 2rem;
+  padding: 0.85rem 2.2rem;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -110,15 +150,16 @@ h3 {
   background: var(--ruby);
 }
 
-.button--ghost {
+.button--light {
   background: transparent;
-  color: var(--burgundy);
+  border-color: var(--linen);
+  color: var(--linen);
 }
 
-.button--ghost:hover,
-.button--ghost:focus-visible {
-  background: var(--burgundy);
-  color: var(--cream);
+.button--light:hover,
+.button--light:focus-visible {
+  background: var(--linen);
+  color: var(--wine);
 }
 
 .button:disabled {

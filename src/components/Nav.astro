@@ -22,36 +22,37 @@ const links = [
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.6rem 1.5rem;
-    background: color-mix(in srgb, var(--cream) 92%, transparent);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid var(--linen);
+    padding: 0.5rem 2rem;
+    background: var(--wine);
+    color: var(--linen);
+    border-bottom: 1px solid color-mix(in srgb, var(--linen) 25%, transparent);
   }
 
   .nav__brand {
     font-size: 1.9rem;
-    color: var(--burgundy);
     text-decoration: none;
   }
 
   .nav__links {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
   .nav__links a {
-    color: var(--espresso);
     text-decoration: none;
-    font-size: 1rem;
-    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
   }
 
   .nav__links a:hover {
-    color: var(--ruby);
+    color: var(--cream);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
   }
 
   @media (max-width: 34rem) {
@@ -60,12 +61,12 @@ const links = [
     }
 
     .nav__links {
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
     .nav__links a {
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
     }
   }
 </style>
