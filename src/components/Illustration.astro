@@ -1,7 +1,7 @@
 ---
 // Hand-drawn style line art in the spirit of the invitation moodboard.
 interface Props {
-  name: "chandelier" | "table" | "bow" | "sprigs";
+  name: "chandelier" | "table" | "bow" | "sprigs" | "branch";
   class?: string;
 }
 
@@ -122,6 +122,23 @@ const flame = (x: number, y: number) => `M${x} ${y} c-3 -5 -2 -9 0 -13 c2 4 3 8 
   )
 }
 
+{
+  name === "branch" && (
+    <svg class:list={["illustration", className]} viewBox="0 0 120 310" aria-hidden="true">
+      <path d="M60 308 C55 230 68 160 52 90 C44 52 54 24 70 4" />
+      {[[58, 270, -150], [60, 240, -30], [62, 205, -155], [63, 175, -25], [60, 145, -160], [56, 115, -20], [50, 88, -165], [48, 62, -35], [55, 38, -150], [64, 18, -40]].map(([x, y, angle]) => (
+        <path
+          d="M0 0 C8 -11 28 -11 36 0 C28 11 8 11 0 0 Z M2 0 H30"
+          transform={`translate(${x} ${y}) rotate(${angle})`}
+        />
+      ))}
+      {[[78, 196], [84, 190], [80, 204], [34, 128], [28, 122]].map(([cx, cy]) => (
+        <circle cx={cx} cy={cy} r="3" />
+      ))}
+    </svg>
+  )
+}
+
 <style>
   .illustration {
     display: block;
@@ -129,7 +146,7 @@ const flame = (x: number, y: number) => `M${x} ${y} c-3 -5 -2 -9 0 -13 c2 4 3 8 
     height: auto;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.3;
+    stroke-width: 1.4;
     stroke-linecap: round;
     stroke-linejoin: round;
   }

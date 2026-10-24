@@ -4,7 +4,9 @@ import TimelineIcon from "./TimelineIcon.astro";
 import { schedule } from "../data/wedding";
 ---
 
-<section id="programme" class="section">
+<section id="programme" class="section programme">
+  <div class="programme__branch programme__branch--left"><Illustration name="branch" /></div>
+  <div class="programme__branch programme__branch--right"><Illustration name="branch" /></div>
   <div class="section__inner">
     <h2 class="section__title"><span class="script">Le</span>Programme</h2>
     <p class="section__subtitle">Deux jours pour célébrer ensemble</p>
@@ -52,10 +54,49 @@ import { schedule } from "../data/wedding";
     margin-top: 3rem;
   }
 
-  /* Wood line-art ornament on the cream background. */
+  /* Wood line-art decoration on the cream background. */
+  .programme {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .programme__branch {
+    position: absolute;
+    width: clamp(7rem, 11vw, 11rem);
+    color: var(--wood);
+    pointer-events: none;
+  }
+
+  .programme__branch--left {
+    top: 6rem;
+    left: clamp(0.5rem, 4vw, 5rem);
+    transform: rotate(-8deg);
+  }
+
+  .programme__branch--right {
+    bottom: 5rem;
+    right: clamp(0.5rem, 4vw, 5rem);
+    transform: scaleX(-1) rotate(-8deg);
+  }
+
+  @media (max-width: 64rem) {
+    .programme__branch {
+      width: 5rem;
+      opacity: 0.35;
+    }
+
+    .programme__branch--left {
+      top: 2rem;
+    }
+
+    .programme__branch--right {
+      bottom: 2rem;
+    }
+  }
+
   .ornament {
-    width: min(14rem, 70%);
-    margin: -2rem auto 3rem;
+    width: min(20rem, 80%);
+    margin: -1.5rem auto 3rem;
     color: var(--wood);
   }
 

@@ -13,6 +13,7 @@ import { couple } from "../data/wedding";
     <p>Vous trouverez ici tout le programme et les infos pratiques du week-end.</p>
     <p>Merci de faire partie de notre histoire&nbsp;: maintenant, place à la fête&nbsp;!</p>
     <p class="welcome__signature script">{couple.bride} &amp; {couple.groom}</p>
+    <div class="welcome__ornament"><Illustration name="sprigs" /></div>
   </div>
 </section>
 
@@ -56,6 +57,12 @@ import { couple } from "../data/wedding";
     transform: translateX(-50%);
     padding: 0 0.75rem;
     background: var(--cream);
+    color: var(--wood);
+  }
+
+  .welcome__ornament {
+    width: min(16rem, 80%);
+    margin: 1.25rem auto 0;
     color: var(--wood);
   }
 

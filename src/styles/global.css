@@ -3,7 +3,7 @@
   --wine: #3b1219;
   --burgundy: #480202;
   --ruby: #6c0b25;
-  --green: #6f8d55;
+  --green: #22572e;
   --wood: #785a3d; /* light wood: small labels and accents on cream */
   --linen: #d9cdbb;
   --cream: #f4efe4;
@@ -122,6 +122,11 @@ h3 {
 
 .stripes--green {
   background: repeating-linear-gradient(90deg, var(--green) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
+}
+
+/* Cream (Programme) into green (Infos). */
+.stripes--cream-green {
+  background: repeating-linear-gradient(90deg, var(--cream) 0 0.6rem, var(--green) 0.6rem 1.2rem);
 }
 
 .stripes--linen {
