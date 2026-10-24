@@ -3,8 +3,8 @@
   --wine: #3b1219;
   --burgundy: #480202;
   --ruby: #6c0b25;
-  --green: #2f4f3e; /* fir green, muted (not khaki) */
-  --sage: #b6ad80;
+  --green: #3c8f5c;
+  --wood: #785a3d; /* light wood: small labels and accents on cream */
   --linen: #d9cdbb;
   --cream: #f4efe4;
   --espresso: #2c180f;
@@ -95,7 +95,7 @@ h3 {
   display: block;
   font-size: 0.55em;
   margin-bottom: -0.15em;
-  color: var(--ruby);
+  color: var(--wood);
 }
 
 .section--wine .section__title,
@@ -122,6 +122,10 @@ h3 {
 
 .stripes--green {
   background: repeating-linear-gradient(90deg, var(--green) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
+}
+
+.stripes--wood {
+  background: repeating-linear-gradient(90deg, var(--wood) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
 }
 
 .stripes--linen {
