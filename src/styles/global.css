@@ -124,10 +124,6 @@ h3 {
   background: repeating-linear-gradient(90deg, var(--green) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
 }
 
-.stripes--wood {
-  background: repeating-linear-gradient(90deg, var(--wood) 0 0.6rem, var(--cream) 0.6rem 1.2rem);
-}
-
 .stripes--linen {
   background: repeating-linear-gradient(90deg, var(--linen) 0 0.6rem, var(--wine) 0.6rem 1.2rem);
 }

@@ -1,4 +1,5 @@
 ---
+import Illustration from "./Illustration.astro";
 import TimelineIcon from "./TimelineIcon.astro";
 import { schedule } from "../data/wedding";
 ---
@@ -7,10 +8,16 @@ import { schedule } from "../data/wedding";
   <div class="section__inner">
     <h2 class="section__title"><span class="script">Le</span>Programme</h2>
     <p class="section__subtitle">Deux jours pour célébrer ensemble</p>
+    <div class="ornament"><Illustration name="sprigs" /></div>
 
     {
-      schedule.map((day) => (
+      schedule.map((day, index) => (
         <article class="day">
+          {index > 0 && (
+            <div class="ornament">
+              <Illustration name="sprigs" />
+            </div>
+          )}
           <header class="day__header">
             <p class="day__date">{day.day}</p>
             <h3 class="day__title">{day.title}</h3>
@@ -42,7 +49,18 @@ import { schedule } from "../data/wedding";
 
 <style>
   .day + .day {
-    margin-top: 4rem;
+    margin-top: 3rem;
+  }
+
+  /* Wood line-art ornament on the cream background. */
+  .ornament {
+    width: min(14rem, 70%);
+    margin: -2rem auto 3rem;
+    color: var(--wood);
+  }
+
+  .day .ornament {
+    margin: 0 auto 2.5rem;
   }
 
   .day__header {
@@ -115,7 +133,7 @@ import { schedule } from "../data/wedding";
     grid-column: 2;
     justify-self: start;
     width: 4.5rem;
-    color: var(--green);
+    color: var(--wine);
   }
 
   .timeline__item:nth-child(even) .timeline__text {
