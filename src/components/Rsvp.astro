@@ -161,6 +161,18 @@ const NOT_BLANK = ".*\\S.*";
     border-radius: 0.5rem;
     outline: 1px solid var(--linen);
     outline-offset: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    padding-top: 3.25rem;
+  }
+
+  /* Small checkerboard strip along the top of the card. */
+  .form::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.8rem;
+    background: repeating-conic-gradient(var(--wine) 0 25%, var(--linen) 0 50%) 0 0 / 0.8rem 0.8rem;
     display: grid;
     gap: 1.5rem;
   }

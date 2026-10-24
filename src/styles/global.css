@@ -3,7 +3,7 @@
   --wine: #3b1219;
   --burgundy: #480202;
   --ruby: #6c0b25;
-  --green: #22572e;
+  --green: #24461d; /* deep moss green: dark, a touch olive, not khaki */
   --wood: #785a3d; /* light wood: small labels and accents on cream */
   --linen: #d9cdbb;
   --cream: #f4efe4;
@@ -129,8 +129,10 @@ h3 {
   background: repeating-linear-gradient(90deg, var(--cream) 0 0.6rem, var(--green) 0.6rem 1.2rem);
 }
 
-.stripes--linen {
-  background: repeating-linear-gradient(90deg, var(--linen) 0 0.6rem, var(--wine) 0.6rem 1.2rem);
+/* Small checkerboard, a discreet echo of the very first hero. */
+.checker {
+  height: 1.4rem;
+  background: repeating-conic-gradient(var(--wine) 0 25%, var(--cream) 0 50%) 0 0 / 1.4rem 1.4rem;
 }
 
 .button {

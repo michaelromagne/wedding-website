@@ -18,20 +18,18 @@ import { couple } from "../data/wedding";
 </section>
 
 <style>
-  /* Tall wine & cream bars with a card laid over them, as on the inspiration site. */
+  /* Wine & cream bars along the top, with the card sitting below them. */
   .welcome {
-    padding: 0 1.5rem 5rem;
+    padding: 7rem 1.5rem 3rem;
     background:
-      linear-gradient(var(--cream), var(--cream)) bottom / 100% calc(100% - 9rem) no-repeat,
-      repeating-linear-gradient(90deg, var(--wine) 0 2.2rem, var(--cream) 2.2rem 4.4rem);
+      repeating-linear-gradient(90deg, var(--wine) 0 1rem, var(--cream) 1rem 2rem) top / 100% 2.5rem no-repeat,
+      var(--cream);
   }
 
   .welcome__card {
     position: relative;
     max-width: 40rem;
     margin: 0 auto;
-    top: 4.5rem;
-    margin-bottom: 4.5rem;
     padding: 3.5rem 2.5rem 2.5rem;
     text-align: center;
     background: var(--cream);
